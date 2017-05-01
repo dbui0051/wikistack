@@ -1,4 +1,3 @@
-const express = require('express');
 const router = require('express').Router();
 const wikiRouter = require('./wiki');
 const userRouter = require('./user');
