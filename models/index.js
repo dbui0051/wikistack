@@ -8,7 +8,18 @@ let Page = db.define('page', {
         type: Sequelize.STRING, allowNull: false
     },
     urlTitle: {
-        type: Sequelize.STRING, allowNull: false
+        type: Sequelize.STRING, allowNull: false,
+                beforeValidate: function(page, options, fn) {
+                    if (page.title) {
+                        // Removes all non-alphanumeric characters from title
+                        // And make whitespace underscore
+                        page.title = page.title.replace(/\s+/g, '_').replace(/\W/g, '');
+                        //return page.title.replace(/\s+/g, '_').replace(/\W/g, '');
+                    } else {
+                        // Generates random 5 letter string
+                        page.urlTitle = Math.random().toString(36).substring(2, 7);
+                    }          
+                }
     },
     content: {
         type: Sequelize.TEXT, allowNull: false
@@ -22,6 +33,20 @@ let Page = db.define('page', {
 }, {
     getterMethods: {
         route: function() { return '/wiki/' + this.urlTitle }
+    }
+}, {
+    hooks: {
+        // beforeValidate: function(page, options, fn) {
+        //     if (page.title) {
+        //         // Removes all non-alphanumeric characters from title
+        //         // And make whitespace underscore
+        //         page.title = page.title.replace(/\s+/g, '_').replace(/\W/g, '');
+        //         //return page.title.replace(/\s+/g, '_').replace(/\W/g, '');
+        //     } else {
+        //         // Generates random 5 letter string
+        //         page.urlTitle = Math.random().toString(36).substring(2, 7);
+        //     }          
+        // }
     }
 });
 

@@ -3,12 +3,16 @@
 const express = require('express');
 const morgan = require('morgan');
 const nunjucks = require('nunjucks');
+const bodyParser = require('body-parser');
 const db = require('./models').db;
 const routes = require('./routes');
 
 const app = express();
 
 app.use(morgan('dev'));
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.use('/', routes);
 
