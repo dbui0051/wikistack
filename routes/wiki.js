@@ -8,7 +8,8 @@ router.get('/', function(req, res, next){
 });
 
 router.post('/', function(req, res, next){
-	res.render('addpage', {});
+	console.log(req.body)
+	res.json(req.body);
 });
 
 router.get('/add', function(req, res, next){
